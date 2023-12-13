@@ -3,7 +3,6 @@ import secrets  # mais seguro que o modulo random, não há seed
 import array
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import Callable
 
 
 def mega_sena_1(q_num: int = 6):
@@ -117,10 +116,8 @@ def verify_qnum(q_num: int):
 
     return q_num
 
-# wrapper for mega_sena_* functions
-def mega_sena(q_num: int = 6, func: str = '3'):
 
-    q_num = verify_qnum(q_num)
+def choose_func(func: str = '3'):
 
     func_dict = {'1': mega_sena_1, '2': mega_sena_2,
                  '3': mega_sena_3, 'np': mega_sena_np,
@@ -131,17 +128,27 @@ def mega_sena(q_num: int = 6, func: str = '3'):
     else:
         mega_func = func_dict[func]
 
+    return mega_func
+
+
+# wrapper for mega_sena_* functions
+def mega_sena(q_num: int = 6, func: str = '3'):
+
+    q_num = verify_qnum(q_num)
+
+    mega_func = choose_func(func)
+
     return mega_func(q_num)
 
 
-def distribution_plot(mega_func: Callable[[int], list] | Callable[[int], np.ndarray] | Callable[[int], array.array], q_num : int = 6, n_sorteios: int = 10000):
+def distribution_plot(n_sorteios: int = 10000, q_num: int = 6, func: str = '3'):
 
     q_num = verify_qnum(q_num)
 
     test_array = np.empty(shape=(n_sorteios, q_num), dtype=np.uint8)
 
     for num in range(n_sorteios):
-        test_array[num, :] = mega_func(q_num)
+        test_array[num, :] = mega_sena(q_num, func)
 
     v_unique, v_counts = np.unique(test_array, return_counts=True)
 
@@ -154,4 +161,4 @@ def distribution_plot(mega_func: Callable[[int], list] | Callable[[int], np.ndar
     return
 
 
-# distribution_plot(mega_sena, n_sorteios=100000)
+# distribution_plot(func='1', n_sorteios=1000000)
