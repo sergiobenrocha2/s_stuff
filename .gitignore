@@ -1,0 +1,13 @@
+
+# C / C++
+*.o
+
+# Python
+__pycache__/
+
+# PyCharm
+.idea/
+venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
