@@ -16,12 +16,12 @@ typedef unsigned short wildcard_type;
 
 bool valid_range_number(long long int num, unsigned char last_bit) {
 
-    return num >=0 || num < (long long int)pow(2, last_bit + 1);  // true if it's inside valid range
+    return num >=0 && num < (long long int)pow(2, last_bit + 1);  // true if it's inside valid range
 }
 
 bool valid_range_position(long long int n_bit, unsigned char last_bit) {
 
-    return n_bit >= 0 || n_bit <= last_bit;  // true if it's inside valid range
+    return n_bit >= 0 && n_bit <= last_bit;  // true if it's inside valid range
 }
 
 
