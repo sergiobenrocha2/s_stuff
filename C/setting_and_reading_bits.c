@@ -7,34 +7,34 @@
 #define MASK 0x01
 #define STR_TEXT_SIZE 50
 
-typedef bool (*valid_range)(long long int, unsigned char);
-
 // change the testing type easily, one spot
 typedef unsigned short wildcard_type;
 #define PRINT(x) printf("\nNumber after setting the bit %d: %hu\n", n_bit, *p_num);  // %hhu, %hu, %u, %d, %ld, %lld, %lu, %llu
 
 
-bool valid_range_number(long long int num, unsigned char last_bit) {
+bool valid_range(long long int num, unsigned char last_bit, const char* vr_option) {
 
-    return num >=0 && num < (long long int)pow(2, last_bit + 1);  // true if it's inside valid range
+    bool result = false;
+
+    if(strcmp("position", vr_option) == 0)
+        result = num >= 0 && num <= last_bit;
+    else
+        result = num >=0 && num < (long long int)pow(2, last_bit + 1);  // true if it's inside valid range
+
+    return result;
 }
 
-bool valid_range_position(long long int n_bit, unsigned char last_bit) {
 
-    return n_bit >= 0 && n_bit <= last_bit;  // true if it's inside valid range
-}
-
-
-long long int read_input(char last_bit, valid_range vr, char* text_str) {
+long long int read_input(const char* text_str, unsigned char last_bit, const char* vr_option) {
 
     long long int input_number;
-    
+
     while(true) {
 
         printf("%s", text_str);
         scanf("%lld", &input_number);
 
-        if(vr(input_number, last_bit) == true)
+        if(valid_range(input_number, last_bit, vr_option) == true)
             break;
         else
             printf("Invalid number for the chosen type (negative or too high), try again.\n");
@@ -62,13 +62,13 @@ void print_binary(wildcard_type num, unsigned char last_bit) {
 }
 
 
-bool read_bit(wildcard_type num, char n_bit) {
+bool read_bit(wildcard_type num, unsigned char n_bit) {
 
     return num & (MASK << n_bit);
 }
 
 
-void set_bit(wildcard_type* p_num, char n_bit) {
+void set_bit(wildcard_type* p_num, unsigned char n_bit) {
 
     *p_num = *p_num | (MASK << n_bit);
     PRINT(*p_num);
@@ -94,16 +94,16 @@ int main() {
     sprintf(last_bit_str, "\nEnter the bit position to set (0...%d): ", last_bit);
 
 
-    // input number
+    // number input
 
-    num = (wildcard_type) read_input(last_bit, valid_range_number, "Enter an integer number: ");
+    num = (wildcard_type) read_input("Enter an integer number: ", last_bit, "number input");
 
     print_binary(num, last_bit);
 
 
-    // input bit position
+    // bit position input 
 
-    n_bit = (char) read_input(last_bit, valid_range_position, last_bit_str);
+    n_bit = (char) read_input(last_bit_str, last_bit, "position");
 
 
     // verifying if bit is set
