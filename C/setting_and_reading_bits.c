@@ -4,11 +4,11 @@
 #include <stdbool.h>
 #include <string.h>
 
-#define MASK 0x01
 #define STR_TEXT_SIZE 50
 
 // change the testing type easily, one spot
-typedef unsigned short wildcard_type;
+typedef unsigned short wildcard_type;  // try change short to: char, int, long int, long long int
+#define MASK 0x01U  // 0x01U, 0x01L, 0x01LL, 0x01UL, 0x01ULL
 char f_specifier[] = "%hu";  // %hhu, %hu, %u, %d, %ld, %lld, %lu, %llu
 
 
@@ -19,7 +19,7 @@ bool valid_range(long long int num, unsigned char last_bit, const char* vr_optio
     if(strcmp("position", vr_option) == 0)
         result = num >= 0 && num <= last_bit;
     else
-        result = num >=0 && num < (long long int)pow(2, last_bit + 1);  // true if it's inside valid range
+        result = num >= 0 && num < pow(2, last_bit + 1);  // true if it's inside valid range
 
     return result;
 }
@@ -72,12 +72,6 @@ void set_bit(wildcard_type* p_num, unsigned char n_bit) {
 
     *p_num = *p_num | (MASK << n_bit);
 
-    char output_str[STR_TEXT_SIZE] = "\nNumber after setting the bit %d: ";
-    strcat(output_str, f_specifier);  // add the *p_num format specifier to the string
-    strcat(output_str, "\n");
-
-    printf(output_str, n_bit, *p_num);
-
     return;
 }
 
@@ -121,7 +115,15 @@ int main() {
     // setting the bit
 
     if(is_set == false) {
+
         set_bit(&num, n_bit);
+
+        char output_str_tmp[STR_TEXT_SIZE] = "\nNumber after setting the bit %d: ";
+        strcat(output_str_tmp, f_specifier);  // add the format specifier of num variable to the string
+        strcat(output_str_tmp, "\n");
+
+        printf(output_str_tmp, n_bit, num);
+
         print_binary(num, last_bit);
     }
 
