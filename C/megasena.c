@@ -62,12 +62,12 @@ bool already_drawn(unsigned long long num, unsigned long long* array) {
 
     bool result = false;
 
-    for(int i = 0; i < Q_NUM; i++) {
+    for(int i = 0; array[i] != 0; i++)
+
         if(num == array[i]) {
             result = true;
             break;
         }
-    }
 
     return result;
 }
@@ -119,8 +119,10 @@ void sort_array(unsigned long long array[]) {
 void print_result(unsigned long long array[]) {
 
     printf("\nSeu jogo:  ");
+
     for(int i = 0; i < Q_NUM; i++)
         printf("%llu  ", array[i]);
+
     printf("\n");
 
     return;
@@ -129,9 +131,13 @@ void print_result(unsigned long long array[]) {
 
 int main() {
 
-    unsigned long long array[Q_NUM];
+    unsigned long long array[Q_NUM] = {0ULL};
 
-    for(int i = 0; i < GAMES_NUM; i++)
+    for(int i = 0; i < GAMES_NUM; i++) {
+
+        for(int i = 0; i < Q_NUM; i++)
+            array[i] = 0ULL;  // reset the array
+
         if (setjmp(buf) == false) {  // try this code block
             mega_sena(array);
             sort_array(array);
@@ -140,6 +146,7 @@ int main() {
 
         else
             printf("\nSomething went wrong, exiting...\n");
+    }
 
     // printf("\n");
 
