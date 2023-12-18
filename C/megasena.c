@@ -73,13 +73,10 @@ bool already_drawn(unsigned long long num, unsigned long long* array) {
 }
 
 
-void mega_sena(unsigned long long array[]) {
+void mega_sena(unsigned long long array[], FILE* fp) {
 
-    FILE* fp = NULL;
     unsigned long long random_num;
     int count = 0;
-
-    urandom_access(&fp);  // opening
 
     while(count < Q_NUM) {
 
@@ -91,8 +88,6 @@ void mega_sena(unsigned long long array[]) {
         else
             array[count++] = random_num;
     }
-
-    urandom_access(&fp);  // closing
 
     return;
 }
@@ -121,7 +116,7 @@ void print_result(unsigned long long array[]) {
     printf("\nSeu jogo:  ");
 
     for(int i = 0; i < Q_NUM; i++)
-        printf("%llu  ", array[i]);
+        printf("%2llu  ", array[i]);
 
     printf("\n");
 
@@ -132,6 +127,9 @@ void print_result(unsigned long long array[]) {
 int main() {
 
     unsigned long long array[Q_NUM] = {0ULL};
+    FILE* fp = NULL;
+
+    urandom_access(&fp);  // opening
 
     for(int i = 0; i < GAMES_NUM; i++) {
 
@@ -139,7 +137,7 @@ int main() {
             array[i] = 0ULL;  // reset the array
 
         if (setjmp(buf) == false) {  // try this code block
-            mega_sena(array);
+            mega_sena(array, fp);
             sort_array(array);
             print_result(array);
         }
@@ -147,6 +145,8 @@ int main() {
         else
             printf("\nSomething went wrong, exiting...\n");
     }
+
+    urandom_access(&fp);  // closing
 
     // printf("\n");
 
