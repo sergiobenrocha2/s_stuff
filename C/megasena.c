@@ -12,7 +12,9 @@
 #define Q_NUM 6
 #define GAMES_NUM 3
 
-jmp_buf buf;
+enum random_gen_cmd_flags {START, CLOSE, _NONE, GENERATE};
+
+static jmp_buf buf;  // only accessible by this file
 
 
 /*
@@ -23,7 +25,7 @@ jmp_buf buf;
  *   fp: a pointer to a file pointer, if provided NULL the function will open
  *       /dev/urandom, if non-NULL it will close /dev/urandom
  */
- 
+
 void urandom_access(FILE** fp) {
 
     enum status_flags {OPENING, CLOSING, CANT_REACH};  // 0: opening, 1: closing, 2: can't reach file
@@ -45,6 +47,7 @@ void urandom_access(FILE** fp) {
     else {
 
         fclose(*fp);
+        *fp = NULL;
         status = CLOSING;
     }
 
@@ -55,6 +58,36 @@ void urandom_access(FILE** fp) {
         longjmp(buf, CANT_REACH);  // back to main()
 
     return;
+}
+
+
+/*
+ * Function:  random_gen
+ * ---------------------
+ *   returns random number from /dev/urandom, needs to be initialized (START
+ *   command)
+ *
+ *   cmd: command to the function, START, CLOSE, GENERATE
+ */
+
+unsigned long long random_gen(int cmd) {
+
+    unsigned long long random_num = 0ULL;
+    static FILE* fp = NULL;
+
+    if(fp == NULL && cmd == START)
+        urandom_access(&fp);  // opening
+
+    else if(fp != NULL && cmd == GENERATE)
+        fread(&random_num, sizeof(random_num), 1ULL , fp);
+
+    else if(fp != NULL && cmd == CLOSE)
+        urandom_access(&fp);  // closing
+
+    else
+        printf("Something wrong in random_gen()!");
+
+    return random_num;
 }
 
 
@@ -73,15 +106,14 @@ bool already_drawn(unsigned long long num, unsigned long long* array) {
 }
 
 
-void mega_sena(unsigned long long array[], FILE* fp) {
+void mega_sena(unsigned long long array[]) {
 
     unsigned long long random_num;
     int count = 0;
 
     while(count < Q_NUM) {
 
-        fread(&random_num, sizeof(random_num), 1ULL , fp);
-        random_num = random_num % MAX_NUM + 1ULL;
+        random_num = random_gen(GENERATE) % MAX_NUM + 1ULL;
 
         if(already_drawn(random_num, array) == true)
             continue;
@@ -127,28 +159,28 @@ void print_result(unsigned long long array[]) {
 int main() {
 
     unsigned long long array[Q_NUM] = {0ULL};
-    FILE* fp = NULL;
 
-    urandom_access(&fp);  // opening
+    if (setjmp(buf) == false) {  // try this code block
 
-    for(int i = 0; i < GAMES_NUM; i++) {
+        random_gen(START);  // initializing random generator
 
-        for(int i = 0; i < Q_NUM; i++)
-            array[i] = 0ULL;  // reset the array
+        for(int i = 0; i < GAMES_NUM; i++) {
 
-        if (setjmp(buf) == false) {  // try this code block
-            mega_sena(array, fp);
+            for(int i = 0; i < Q_NUM; i++)
+                array[i] = 0ULL;  // reset the array
+
+            mega_sena(array);
             sort_array(array);
             print_result(array);
         }
 
-        else
-            printf("\nSomething went wrong, exiting...\n");
+        random_gen(CLOSE);  // closing the /dev/urandom
     }
 
-    urandom_access(&fp);  // closing
+    else {
 
-    // printf("\n");
+        printf("\nSomething went wrong, exiting... switch VERBOSE to true for more information\n");
+    }
 
     return 0;
 }
