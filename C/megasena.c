@@ -3,9 +3,15 @@
  * For plotting: GNUplot, PGPLOT, PLplot, Cplotlib, SDL, OpenGL
  */
 
+#define USE_GETRANDOM false
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <setjmp.h>
+
+#if USE_GETRANDOM
+#include <sys/random.h>
+#endif
 
 #define VERBOSE false
 #define MAX_NUM 60ULL
@@ -78,8 +84,24 @@ unsigned long long random_gen(int cmd) {
     if(fp == NULL && cmd == START)
         urandom_access(&fp);  // opening
 
-    else if(fp != NULL && cmd == GENERATE)
-        fread(&random_num, sizeof(random_num), 1ULL , fp);
+    else if(fp != NULL && cmd == GENERATE) {
+
+        #if USE_GETRANDOM
+            ssize_t result_from_getrandom;
+            if((result_from_getrandom = getrandom(&random_num, sizeof(random_num), GRND_NONBLOCK)) != sizeof(random_num)) {
+                printf("\n--> %zd Bytes were read!\n", result_from_getrandom);
+                longjmp(buf, -1);  // error, back to main()
+            }
+        #else
+            size_t count = (size_t) 1;
+            if(fread(&random_num, sizeof(random_num), count, fp) < count) {  // if less than count param of fread()
+                printf("\n--> 0 Byte was read!\n");
+                longjmp(buf, -1);
+            }
+        #endif
+
+        // printf("\n--> %llu", random_num);
+    }
 
     else if(fp != NULL && cmd == CLOSE)
         urandom_access(&fp);  // closing
