@@ -4,6 +4,7 @@
  */
 
 #define USE_GETRANDOM false
+#define VERBOSE false
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -13,7 +14,7 @@
 #include <sys/random.h>
 #endif
 
-#define VERBOSE false
+
 #define MAX_NUM 60ULL
 #define Q_NUM 6
 #define GAMES_NUM 3
@@ -76,6 +77,28 @@ void urandom_access(FILE** fp) {
  *   cmd: command to the function, START, CLOSE, GENERATE
  */
 
+
+void print_binary(unsigned long long num) {
+
+    #define MASK 0x01ULL
+    int last_bit = 8 * (int) sizeof(num) - 1;
+
+    printf("\n--> ");
+
+    for(int i = last_bit; i >= 0; i--) {
+
+        printf("%d", num & (MASK << i) ? 1: 0);
+
+        if(i % 4 == 0)
+            printf(" ");
+        if(i % 8 == 0)
+            printf(" ");
+    }
+
+    return;
+}
+
+
 unsigned long long random_gen(int cmd) {
 
     unsigned long long random_num = 0ULL;
@@ -100,7 +123,10 @@ unsigned long long random_gen(int cmd) {
             }
         #endif
 
-        // printf("\n--> %llu", random_num);
+        if(VERBOSE) {
+            printf("\nrandom number:\n--> %llu", random_num);
+            print_binary(random_num);
+        }
     }
 
     else if(fp != NULL && cmd == CLOSE)
