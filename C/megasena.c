@@ -155,6 +155,46 @@ void print_result(unsigned long long array[]) {
     return;
 }
 
+/*
+ * Function:  create_csv_from_N_runs
+ * ---------------------------------
+ *   creates a CSV file filled with random numbers (TEST_NUM rows, Q_NUM cols),
+ *   so you can load easily this data with Python / NumPy. Numbers are not
+ *   sorted.
+ *
+ */
+
+void create_csv_from_N_runs(void) {
+
+    #define TEST_NUM 100000
+
+    unsigned long long array_2[TEST_NUM][Q_NUM] = {0ULL};
+    FILE* fp_w = NULL;
+
+    fp_w = fopen("test.csv", "w");
+
+    random_gen(START);
+
+    for(int i = 0; i < TEST_NUM; i++)
+        mega_sena(array_2[i]);
+
+    for(int i = 0; i < TEST_NUM; i++) {
+        for(int j = 0; j < Q_NUM; j++) {
+            fprintf(fp_w, "%llu", array_2[i][j]);
+            if(j != Q_NUM - 1)
+                fprintf(fp_w, ",");
+        }
+        fprintf(fp_w, "\n");
+    }
+
+    fclose(fp_w);
+    fp_w = NULL;
+
+    random_gen(CLOSE);
+
+    return;
+}
+
 
 int main() {
 
@@ -181,6 +221,8 @@ int main() {
 
         printf("\nSomething went wrong, exiting... switch VERBOSE to true for more information\n");
     }
+
+    // create_csv_from_N_runs();
 
     return 0;
 }
