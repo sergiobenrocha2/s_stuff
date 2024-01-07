@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2024-01-07T16:54:52.030Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="j6GI22Ov_ERU-gjGBqg-" version="22.1.17" type="device">
+  <diagram name="Página-1" id="qDMnB4-dnroDRjVj_jL6">
+    <mxGraphModel dx="1434" dy="746" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KSANAxl0gsGJUd39YdUt-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-1" target="KSANAxl0gsGJUd39YdUt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-1" value="create new project" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="160" y="220" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-2" target="KSANAxl0gsGJUd39YdUt-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-2" value="Start" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="160" y="100" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-4" value="cargo new my_project" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="328" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-5" target="KSANAxl0gsGJUd39YdUt-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-5" value="edit&lt;br&gt;Cargo.toml" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="500" y="220" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-6" target="KSANAxl0gsGJUd39YdUt-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-6" value="edit&lt;br&gt;src/main.rs" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="670" y="220" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-7" target="KSANAxl0gsGJUd39YdUt-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-7" value="go to the new project / folder" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="330" y="220" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-8" value="cd my_project" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="330" y="328" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-12" value="compile the source" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="840" y="220" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-13" value="End" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="990" y="358" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-15" value="cargo run" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="855" y="328" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;" edge="1" parent="1" source="KSANAxl0gsGJUd39YdUt-12" target="KSANAxl0gsGJUd39YdUt-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-20" value="Linux terminal:" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="20" y="328" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="KSANAxl0gsGJUd39YdUt-21" value="Your program!!!" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="665" y="180" width="110" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -2,6 +2,11 @@
 # C / C++
 *.o
 
+# Rust
+debug/
+target/
+Cargo.lock
+
 # Python
 __pycache__/
 
