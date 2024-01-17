@@ -18,6 +18,7 @@ struct student {
     };
 };
 
+
 int main() {
 
     struct student variable_1, variable_2;
@@ -29,14 +30,20 @@ int main() {
 
     fgets(input_buf, sizeof(input_buf), stdin);
 
-    if (strchr(input_buf, (int)'.') != NULL)
+    if (strchr(input_buf, (int)'.') != NULL) {
+        variable_1.grade_type = FLOAT;
         sscanf(input_buf, "%f", &variable_1.exactGrade);
+    }
     
-    else if (isalpha(input_buf[0]) != 0)
+    else if (isalpha(input_buf[0]) != 0) {
+        variable_1.grade_type = CHAR;
         sscanf(input_buf, "%c", &variable_1.letterGrade);
+    }
     
-    else
+    else {
+        variable_1.grade_type = INT;
         sscanf(input_buf, "%d", &variable_1.roundedGrade);
+    }
 
     printf("\n");
     printf("%c\n", variable_1.letterGrade);
@@ -57,4 +64,3 @@ int main() {
 
     return 0;
 }
-
